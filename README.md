@@ -68,3 +68,46 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+### Crypto Project -----------------------------------------
+
+Crypto Details Page: Displays detailed information about a specific cryptocurrency, including market cap, price changes, and a price history chart.
+
+Price Comparison: Users can compare real-time prices of different cryptocurrencies from various markets.
+
+WebSocket Integration: Real-time price updates via WebSockets.
+
+Price History Chart: A chart that displays historical prices of the selected cryptocurrency.
+
+Available Routes:
+
+1. Description: The home page that displays a list of cryptocurrencies with their current prices and market data.
+Data Fetched: Market data (price, market cap, price change percentage).
+
+2. /crypto/:id
+Description: The detailed page for a specific cryptocurrency, accessed by clicking on a card from the homepage.
+Data Fetched: Cryptocurrency details (name, market data), historical price data, tickers (for price comparison across different markets).
+
+3. Network Error if 429 error from the server.
+
+### API Integration
+
+The app uses the following CoinGecko API endpoints:
+
+Market Data:
+/simple/price: To get current price information for a list of cryptocurrencies.
+/coins/markets: To get the market data for cryptocurrencies like price, market cap, etc.
+Coin Details:
+/coins/{id}: To get detailed information about a specific cryptocurrency.
+/coins/{id}/tickers: To fetch the available tickers for a specific cryptocurrency.
+/coins/{id}/history: To fetch the historical data of a cryptocurrency.
+
+### Technologies Used
+React.js
+Redux Toolkit
+Axios (for API calls)
+Chart.js (for price history charts)
+WebSockets
+React Router
+Styled Components
