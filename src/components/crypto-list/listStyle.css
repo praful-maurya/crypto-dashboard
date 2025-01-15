@@ -1,0 +1,37 @@
+.crypto-list {
+    display: flex;
+    /* flex-wrap: wrap; */
+    gap: 20px;
+  }
+
+  .crypto-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .crypto-item {
+    background: #d1ebc8;
+    padding: 20px;
+    border-radius: 8px;
+    width: 200px;
+    margin: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .crypto-item h3 {
+    margin: 0 0 10px;
+  }
+  
+  .crypto-item p {
+    margin: 5px 0;
+  }
+
+  .filter-controls{
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: inline-block;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  
