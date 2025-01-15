@@ -25,7 +25,7 @@ const DataTable = ({tickers}) => {
                         </tbody>
                     </table>
                 ) : (
-                    <p>NetWork Error</p>
+                    <p>Network Error: (Tickers not available)</p>
                 )}
             </div>
         </>

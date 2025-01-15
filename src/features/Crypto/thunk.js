@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setCryptocurrencies, setStatus, setError, setDetails, setHistory, setTickers, setSimplePrice } from './cryptoSlice';
-import { ENDPOINTS } from './api';
+import { ENDPOINTS } from './Endpoint';
 import { TYPE } from '../../Constant/constant';
 
 export const fetchCryptoDetails = (id) => async (dispatch) => {

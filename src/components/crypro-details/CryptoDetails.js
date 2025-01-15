@@ -7,7 +7,7 @@ import './CryptoDetail.css';
 import { LABEL, TYPE } from '../../Constant/constant';
 import NotFound from '../../pages/NotFound';
 import styled from 'styled-components';
-import useWebsocket from '../../Services/useWebsocket';
+import useWebsocket from '../../Hooks/useWebsocket';
 import DataTable from './DataTable';
 import { motion } from 'framer-motion';
 import DetailCard from './DetailCard';
@@ -89,13 +89,13 @@ export default CryptoDetail;
 const Main = styled.div`
   .container{
     border: 2px solid #f05486;
-    background: linear-gradient(90deg, rgb(201, 167, 211) 0%, rgb(184, 184, 197) 35%, rgba(161, 92, 146, 0.67) 100%);
+    background: linear-gradient(90deg, rgb(243 204 255) 0%, rgb(216 216 228) 35%, rgb(236 123 211 / 67%) 100%);
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
 
     h2{
-      color:rgb(240, 84, 133);
+      color:rgb(247, 67, 124);
       font-size: 28px;
     }
      p{

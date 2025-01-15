@@ -102,8 +102,10 @@ const CryptoList = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
+        <div className="filter-controls">
           <Filter handlePriceFilterChange={handlePriceFilterChange} priceRange={priceRange} />
           <Sort handleSortChange={handleSortChange} />
+        </div>
         </motion.div>
 
         <motion.div

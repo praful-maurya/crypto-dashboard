@@ -4,7 +4,6 @@ import { LABEL } from "../../../Constant/constant";
 const Filter = ({handlePriceFilterChange, priceRange}) => {
     return (
         <>
-        <div className="filter-controls">
             <h4>Filters:</h4>
             <label>
                 <h5>{LABEL.MIN_PRICE}:</h5>
@@ -24,7 +23,6 @@ const Filter = ({handlePriceFilterChange, priceRange}) => {
                     onChange={handlePriceFilterChange}
                 />
             </label>
-        </div>
         </>
     )
 };

@@ -1,6 +1,7 @@
 import React from 'react'
 import Styled from 'styled-components'
 import { LABEL } from '../Constant/constant';
+import { COLORS } from '../Constant/colors';
 
 const NotFound = ({error}) => {
     return (
@@ -19,8 +20,8 @@ const Main = Styled.div`
     width: 100%;
 
     h2{
-        font-size: 25px;
-    color: red;
+    font-size: 25px;
+    color: ${COLORS.danger};
     font-weight: 600;
     }
 `;

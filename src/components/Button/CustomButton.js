@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { COLORS } from "../../Constant/colors";
 
 const CustomButton = ({ label, onClick }) => {
     return (
@@ -18,8 +19,8 @@ const Main = styled.div`
 
     button{
         color: #fff;
-        background-color: #007bff;
-        border-color: #007bff;
+        background-color: ${COLORS.primary};
+        border-color: ${COLORS.primary};
         display: inline-block;
         font-weight: 400;
         text-align: center;
@@ -33,7 +34,7 @@ const Main = styled.div`
         border-radius: 0.25rem;
         cursor: pointer;
     &:hover {
-        background-color: #0056b3;
+        background-color: ${COLORS.LIGHT_PRIMARY};
         border-color: #004085;
     }
 `

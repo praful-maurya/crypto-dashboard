@@ -1,6 +1,5 @@
 .crypto-list {
     display: flex;
-    /* flex-wrap: wrap; */
     gap: 20px;
   }
 
@@ -28,7 +27,9 @@
   }
 
   .filter-controls{
+    height: 80vh;
     padding: 10px;
+    background-color: #f9debe;
     border-radius: 4px;
     margin-bottom: 20px;
     display: inline-block;

@@ -1,15 +1,26 @@
 import React from "react";
 import { LABEL } from "../../Constant/constant";
+import styled from "styled-components";
+import { COLORS } from "../../Constant/colors";
 
 const CryptoCard = ({ crypto, handleCardClick, key }) => {
     return (
-        <div key={key} className="crypto-item" onClick={() => handleCardClick(crypto.id)}>
+        <Main key={key} className="crypto-item" onClick={() => handleCardClick(crypto.id)}>
             <h3>{crypto.name}</h3>
-            <p>{LABEL.PRICE}: ${crypto.current_price}</p>
-            <p>{LABEL.CHANGE}: {crypto.price_change_percentage_24h}%</p>
-            <p>{LABEL.MARKET_CAP}: ${crypto.market_cap}</p>
-        </div>
+            <p><span>{LABEL.PRICE}:</span> ${crypto.current_price}</p>
+            <p><span>{LABEL.CHANGE}:</span> {crypto.price_change_percentage_24h}%</p>
+            <p><span>{LABEL.MARKET_CAP}:</span> ${crypto.market_cap}</p>
+        </Main>
     )
 };
 
 export default CryptoCard;
+
+const Main = styled.div`
+  display: inline-block;
+  text-align: center;
+  span{
+    font-weight: 600;
+    color:${COLORS.dark};
+  }
+`
