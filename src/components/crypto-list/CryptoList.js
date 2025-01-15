@@ -10,6 +10,7 @@ import CustomButton from '../Button/CustomButton';
 import Filter from './FilterAndSort/Filter';
 import Sort from './FilterAndSort/Sort';
 import { motion } from 'framer-motion';
+import { resetFilters } from '../../features/Crypto/cryptoSlice';
 
 const CryptoList = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,12 @@ const CryptoList = () => {
 
   useEffect(() => {
     dispatch(fetchCryptocurrencies(page));
+
+    return () => {
+      // Reset filters when navigating back to the list page
+      setPage(1);
+      dispatch(resetFilters());
+    };
   }, [dispatch, page]);
 
   useEffect(() => {
@@ -45,14 +52,12 @@ const CryptoList = () => {
     setSortOrder(order);
   };
 
-  const handlePriceFilterChange = useCallback(
-    (e) => {
+  const handlePriceFilterChange = (e) => {
       const newPriceRange = [...priceRange];
       newPriceRange[e.target.name === 'min' ? 0 : 1] = e.target.value;
       setPriceRange(newPriceRange);
-    },
-    [priceRange]
-  );
+    };
+  
 
   const loadMoreData = () => {
     setPage(page + 1);
@@ -103,7 +108,7 @@ const CryptoList = () => {
           transition={{ duration: 1 }}
         >
         <div className="filter-controls">
-          <Filter handlePriceFilterChange={handlePriceFilterChange} priceRange={priceRange} />
+          <Filter key='filter' handlePriceFilterChange={handlePriceFilterChange} priceRange={priceRange} />
           <Sort handleSortChange={handleSortChange} />
         </div>
         </motion.div>
@@ -115,8 +120,8 @@ const CryptoList = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          {filteredCryptos?.map((crypto) => (
-            <CryptoCard crypto={crypto} handleCardClick={handleCardClick} key={crypto.id} />
+          {filteredCryptos?.map((crypto, index) => (
+            <CryptoCard crypto={crypto} handleCardClick={handleCardClick} key={index} />
           ))}
           <CustomButton label={LABEL.LOAD_MORE} onClick={loadMoreData} />
         </motion.div>

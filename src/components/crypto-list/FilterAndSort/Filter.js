@@ -2,6 +2,8 @@ import React from "react";
 import { LABEL } from "../../../Constant/constant";
 
 const Filter = ({handlePriceFilterChange, priceRange}) => {
+    console.log(priceRange);
+    
     return (
         <>
             <h4>Filters:</h4>
