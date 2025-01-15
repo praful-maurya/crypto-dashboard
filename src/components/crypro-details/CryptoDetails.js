@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCryptoDetails, fetchCryptoHistory, fetchTickers } from '../../features/Crypto/thunk';
-import { Line } from 'react-chartjs-2';
+import { fetchCryptoDetails, fetchCryptoHistory, fetchSimplePrice, fetchTickers } from '../../features/Crypto/thunk';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import './CryptoDetail.css';
 import { LABEL, TYPE } from '../../Constant/constant';
 import NotFound from '../../pages/NotFound';
 import styled from 'styled-components';
 import useWebsocket from '../../Services/useWebsocket';
+import DataTable from './DataTable';
+import { motion } from 'framer-motion';
+import DetailCard from './DetailCard';
+import LineChart from '../Charts/LineChart';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const CryptoDetail = () => {
   const dispatch = useDispatch();
   const { id } = useParams(); // Get the crypto id from the URL
-  const { cryptoDetails, cryptoHistory, status, error, tickers } = useSelector((state) => state.crypto);
+  const { cryptoDetails, cryptoHistory, status, error, tickers, simplePrice } = useSelector((state) => state.crypto);
   // console.log(tickers?.tickers?.map((item) => item.base), 'Tikcers');
   const { prices, error: errorWebSocket, isConnected } = useWebsocket([id]);
 
@@ -24,6 +27,7 @@ const CryptoDetail = () => {
     dispatch(fetchCryptoDetails(id));
     dispatch(fetchCryptoHistory(id));
     dispatch(fetchTickers(id));
+    dispatch(fetchSimplePrice(id));
   }, [dispatch, id]);
 
   const chartData = {
@@ -38,8 +42,6 @@ const CryptoDetail = () => {
     ],
   };
 
-  // console.log('chartData', chartData)
-
   if (status === TYPE.LOADING) {
     return <p>{LABEL.LOADING}</p>;
   }
@@ -50,50 +52,34 @@ const CryptoDetail = () => {
 
   return (
     <Main className="crypto-detail">
-      <div style={{ textAlign: 'center' }}>
+      <motion.div
+        style={{ textAlign: 'center' }}
+        initial={{ y: '-80vw' }} 
+        animate={{ y: 0, opacity: 1 }} 
+        transition={{ duration: 1 }} 
+      >
         <h1>Crypto Details</h1>
-      </div>
-      <div className='container'>
-        <h2>{cryptoDetails?.name}</h2>
-        <p><span>{LABEL.CHANGE}:</span>  ${prices?.[id] || cryptoDetails?.market_data?.current_price?.usd}</p>
-        <p><span>{LABEL.MARKET_CAP}:</span>  ${cryptoDetails?.market_data?.market_cap?.usd}</p>
-        <p><span>{LABEL.CHANGE}:</span>  {cryptoDetails?.market_data?.price_change_percentage_24h}%</p>
-      </div>
+      </motion.div>
 
-      <h2>{LABEL.PRICE_HISTORY}</h2>
-      <div className="chart-container">
-        <Line data={chartData} />
-      </div>
+      <motion.div
+        className="container"
+        initial={{ x: '-80vw' }} 
+        animate={{ x: 0 }} 
+        transition={{ duration: 1 }}
+      >
+        <DetailCard cryptoDetails={cryptoDetails}
+          simplePrice={simplePrice}
+          prices={prices}
+          id={id}
+        />
+      </motion.div>
 
-      <h2>Price Comparison</h2>
-      <div className="tickers-container">
-        {tickers?.tickers?.length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Market</th>
-                <th>Last Price</th>
-                <th>Currency</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tickers?.tickers?.map((ticker) => (
-                <tr key={ticker.market.name}>
-                  <td>{ticker.market.name}</td>
-                  <td>${ticker.last}</td>
-                  <td>{ticker.target}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No tickers available</p>
-        )}
-      </div>
+      <LineChart data={chartData} />
+      <DataTable tickers={tickers} />
 
-      {errorWebSocket && <p style={{ color: 'red' }}>Error: {errorWebSocket}</p>}
-      {!isConnected && <p>Connecting to WebSocket...</p>}
-      {isConnected && <p>Connected to WebSocket</p>}
+      {errorWebSocket && <p style={{ color: 'red' }}>{LABEL.ERROR}: {errorWebSocket}</p>}
+      {!isConnected && <p>{LABEL.CONNECTING}</p>}
+      {isConnected && <p>{LABEL.CONNECTED}</p>}
     </Main>
   );
 };

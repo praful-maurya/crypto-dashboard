@@ -1,9 +1,9 @@
 import React from "react";
 import { LABEL } from "../../Constant/constant";
 
-const CryptoCard = ({ crypto, handleCardClick }) => {
+const CryptoCard = ({ crypto, handleCardClick, key }) => {
     return (
-        <div className="crypto-item" onClick={() => handleCardClick(crypto.id)}>
+        <div key={key} className="crypto-item" onClick={() => handleCardClick(crypto.id)}>
             <h3>{crypto.name}</h3>
             <p>{LABEL.PRICE}: ${crypto.current_price}</p>
             <p>{LABEL.CHANGE}: {crypto.price_change_percentage_24h}%</p>

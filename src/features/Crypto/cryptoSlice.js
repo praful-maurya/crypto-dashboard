@@ -5,6 +5,7 @@ const initialState = {
   cryptoDetails: null,
   cryptoHistory: null,
   tickers: [],
+  simplePrice: {},
   status: 'idle',
   error: null,
 };
@@ -29,6 +30,10 @@ const cryptoSlice = createSlice({
       state.tickers = action.payload;
     },
 
+    setSimplePrice(state, action) {
+      state.simplePrice = action.payload;
+    },
+
     setStatus(state, action) {
       state.status = action.payload;
     },
@@ -38,6 +43,6 @@ const cryptoSlice = createSlice({
   },
 });
 
-export const { setCryptocurrencies, setStatus, setError, setDetails, setHistory, setTickers } = cryptoSlice.actions;
+export const { setCryptocurrencies, setStatus, setError, setDetails, setHistory, setTickers, setSimplePrice } = cryptoSlice.actions;
 
 export default cryptoSlice.reducer;

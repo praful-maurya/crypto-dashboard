@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setCryptocurrencies, setStatus, setError, setDetails, setHistory, setTickers } from './cryptoSlice';
+import { setCryptocurrencies, setStatus, setError, setDetails, setHistory, setTickers, setSimplePrice } from './cryptoSlice';
 import { ENDPOINTS } from './api';
 import { TYPE } from '../../Constant/constant';
 
@@ -13,7 +13,7 @@ export const fetchCryptoDetails = (id) => async (dispatch) => {
     dispatch(setError(error.message));
     dispatch(setStatus(TYPE.FAILED));
   }
-}
+};
 
 export const fetchCryptoHistory = (id) => async (dispatch) => {
   try {
@@ -30,8 +30,21 @@ export const fetchCryptoHistory = (id) => async (dispatch) => {
 export const fetchTickers = (id) => async (dispatch) => {
   try {
     dispatch(setStatus(TYPE.LOADING));
-    const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${id}/tickers`);
+    const response = await axios.get(`${ENDPOINTS.CRYPTO_DETAILS}/${id}/tickers`);
     dispatch(setTickers(response.data));
+    dispatch(setStatus(TYPE.SUCCEEDED));
+  } catch (error) {
+    dispatch(setError(error.message));
+    dispatch(setStatus(TYPE.FAILED));
+  }
+};
+
+export const fetchSimplePrice = (id) => async (dispatch) => {
+  try {
+    dispatch(setStatus(TYPE.LOADING));
+    const response = await fetch(`${ENDPOINTS.SIMPLE_PRICE}/?ids=${id}&vs_currencies=usd`);
+    const data = await response.json();
+    dispatch(setSimplePrice(data));
     dispatch(setStatus(TYPE.SUCCEEDED));
   } catch (error) {
     dispatch(setError(error.message));

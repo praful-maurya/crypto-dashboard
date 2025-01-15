@@ -9,6 +9,7 @@ import CryptoCard from './CryptoCard';
 import CustomButton from '../Button/CustomButton';
 import Filter from './FilterAndSort/Filter';
 import Sort from './FilterAndSort/Sort';
+import { motion } from 'framer-motion';
 
 const CryptoList = () => {
   const dispatch = useDispatch();
@@ -85,19 +86,39 @@ const CryptoList = () => {
 
   return (
     <>
-    <h1>Cryptocurrency Dashboard</h1>
-    <div className="crypto-list">
-      <div>
-        <Filter handlePriceFilterChange={handlePriceFilterChange} priceRange={priceRange} />
-        <Sort handleSortChange={handleSortChange} />
+      <motion.div
+        style={{ textAlign: 'center' }}
+        initial={{ y: '-100vw' }}
+        animate={{ y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <h1>Cryptocurrency Dashboard</h1>
+      </motion.div>
+
+      <div className="crypto-list">
+        <motion.div
+          style={{ textAlign: 'center' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <Filter handlePriceFilterChange={handlePriceFilterChange} priceRange={priceRange} />
+          <Sort handleSortChange={handleSortChange} />
+        </motion.div>
+
+        <motion.div
+          className="crypto-items"
+          style={{ textAlign: 'center' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          {filteredCryptos?.map((crypto) => (
+            <CryptoCard crypto={crypto} handleCardClick={handleCardClick} key={crypto.id} />
+          ))}
+          <CustomButton label={LABEL.LOAD_MORE} onClick={loadMoreData} />
+        </motion.div>
       </div>
-      <div className="crypto-items">
-        {filteredCryptos.map((crypto) => (
-          <CryptoCard crypto={crypto} handleCardClick={handleCardClick} key={crypto.id} />
-        ))}
-      <CustomButton label={LABEL.LOAD_MORE} onClick={loadMoreData} />
-      </div>
-    </div>
     </>
   );
 };
